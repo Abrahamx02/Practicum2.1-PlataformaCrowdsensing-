@@ -12,7 +12,7 @@ Equipo: Emilio Cueva, Abraham Ayala, Carlos Correa.
 - `docs/`     bitacora, contrato de datos, manual y capturas
 
 ## Como correrlo en el computador
-1. Copiar `.env.example` a `.env` y poner los datos reales (nunca subir `.env` a Git).
+1. Copiar `.env.example` a `.env` y poner los datos reales 
 2. Crear y activar el entorno virtual, e instalar: `pip install -r requirements-local.txt`
 3. API y formulario: `uvicorn backend.main:app --reload` y abrir http://127.0.0.1:8000
 4. Dashboard: `streamlit run analisis/dashboard.py`
