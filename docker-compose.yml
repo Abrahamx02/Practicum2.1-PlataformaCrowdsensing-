@@ -1,0 +1,35 @@
+# Entorno completo y reproducible en el computador: base de datos con PostGIS + API + formulario
+# Uso:  docker compose up --build      (luego abrir http://localhost:8000)
+# Para borrar todo y empezar de cero:  docker compose down -v
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: mcs
+      POSTGRES_PASSWORD: mcs
+      POSTGRES_DB: mcs
+    ports:
+      - "5433:5432"
+    volumes:
+      - datos_db:/var/lib/postgresql/data
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mcs -d mcs"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://mcs:mcs@db:5432/mcs
+      CLAVE_ESCRITURA: ${CLAVE_ESCRITURA}
+      CLAVE_LECTURA: ${CLAVE_LECTURA}
+      CLAVE_ADMIN: ${CLAVE_ADMIN}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  datos_db:

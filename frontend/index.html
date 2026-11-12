@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reportes urbanos Loja</title>
+  <meta name="theme-color" content="#1a5fb4">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <main>
+    <h1>Reportes urbanos de Loja</h1>
+    <p class="intro">Proyecto académico de la UTPL. Reporta un problema que veas en la calle.</p>
+
+    <label for="categoria">Categoría</label>
+    <select id="categoria">
+      <option value="">-- elige una --</option>
+      <option value="bache">Bache</option>
+      <option value="luminaria_danada">Luminaria dañada</option>
+      <option value="basura">Basura acumulada</option>
+      <option value="otro">Otro</option>
+    </select>
+
+    <label for="descripcion">Descripción (opcional, máximo 280 letras)</label>
+    <textarea id="descripcion" maxlength="280" rows="3"></textarea>
+
+    <label>Ubicación</label>
+    <button type="button" id="botonUbicacion" class="secundario">Obtener mi ubicación</button>
+    <p id="textoUbicacion">Todavía no se ha obtenido la ubicación.</p>
+
+    <label for="foto">Foto (opcional)</label>
+    <input type="file" id="foto" accept="image/*">
+    <p class="aviso">No tomes fotos de rostros ni de placas de vehículos.</p>
+    <img id="vistaPrevia" alt="Vista previa de la foto">
+
+    <div class="consentimiento">
+      <input type="checkbox" id="consentimiento">
+      <label for="consentimiento">
+        Acepto que mi ubicación y la información de este reporte se guarden de forma anónima
+        para este estudio académico. No se guarda mi nombre.
+      </label>
+    </div>
+
+    <button type="button" id="botonEnviar">Enviar reporte</button>
+    <p id="mensaje"></p>
+    <p id="avisoPendientes" class="aviso"></p>
+    <p class="aviso">Tu código de participante: <b id="codigoParticipante"></b>.
+      Guárdalo: si quieres retirarte y que borremos tus reportes, envíalo al equipo.</p>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
