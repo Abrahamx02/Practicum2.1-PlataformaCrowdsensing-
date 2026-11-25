@@ -1,0 +1,38 @@
+# Entorno completo en el computador: base de datos con PostGIS + servidor (formulario, panel y API)
+# Uso:  docker compose up --build      (luego abrir http://localhost:8000)
+# Las tablas se crean solas al encender (migraciones automaticas).
+# Para borrar todo y empezar de cero:  docker compose down -v
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: mcs
+      POSTGRES_PASSWORD: mcs
+      POSTGRES_DB: mcs
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - datos_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mcs -d mcs"]
+      interval: 5s
+      retries: 10
+
+  servidor:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment:
+      DATABASE_URL: postgresql://mcs:mcs@db:5432/mcs
+      CLAVE_ESCRITURA: ${CLAVE_ESCRITURA:?falta CLAVE_ESCRITURA en el archivo .env}
+      CLAVE_LECTURA: ${CLAVE_LECTURA:?falta CLAVE_LECTURA en el archivo .env}
+      CLAVE_ADMIN: ${CLAVE_ADMIN:?falta CLAVE_ADMIN en el archivo .env}
+      MIGRAR_AL_INICIAR: "1"
+      # el puerto solo se abre en tu computador (127.0.0.1); si usas un tunel (Cloudflare), ese es el unico "proxy"
+      CONFIAR_EN_PROXY: ${CONFIAR_EN_PROXY:-1}
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  datos_db:
