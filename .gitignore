@@ -1,0 +1,30 @@
+# Secretos y configuración local (NUNCA se suben)
+.env
+.env.*
+!.env.example
+
+# Python y Node
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+
+# Datos y archivos generados
+analisis/datos/crudo*.csv
+analisis/datos/exportaciones/
+analisis/datos/fotos_para_revisar/
+*.dump
+*.sql.gz
+observatorio_loja_*.zip
+respaldo_*.zip
+logs/
+*.log
+
+# Equipo y sistema
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.zip
