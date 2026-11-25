@@ -1,0 +1,23 @@
+# Plantilla para publicar en Render ("Blueprint"). En Render: New > Blueprint > elegir este repositorio.
+# Los valores marcados sync:false los escribes tu en el panel de Render (nunca en este archivo).
+services:
+  - type: web
+    name: mcs-loja
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/salud
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: CONFIAR_EN_PROXY
+        value: "1"
+      - key: DATABASE_URL
+        sync: false
+      - key: CLAVE_ESCRITURA
+        sync: false
+      - key: CLAVE_LECTURA
+        sync: false
+      - key: CLAVE_ADMIN
+        sync: false

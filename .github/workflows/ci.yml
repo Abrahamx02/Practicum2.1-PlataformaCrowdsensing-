@@ -1,0 +1,46 @@
+# Se ejecuta solo en cada Pull Request y en cada cambio a main: corre todas las pruebas con una base PostGIS real.
+name: Pruebas
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgis/postgis:16-3.4
+        env:
+          POSTGRES_USER: mcs
+          POSTGRES_PASSWORD: mcs
+          POSTGRES_DB: mcs
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U mcs -d mcs"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql://mcs:mcs@localhost:5432/mcs
+      CLAVE_ESCRITURA: clave-escritura-solo-para-pruebas
+      CLAVE_LECTURA: clave-lectura-solo-para-pruebas
+      CLAVE_ADMIN: clave-admin-solo-para-pruebas
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements-local.txt
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Instalar librerias
+        run: pip install -r requirements-local.txt
+      - name: Pruebas de Python (API y calidad)
+        run: python -m pytest -q
+      - name: Pruebas de JavaScript (formulario)
+        run: npm test

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f3f0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Reporta problemas urbanos de Loja desde tu celular. Proyecto académico de investigación.">
+  <title>Observatorio urbano · Loja</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="logo-marca.svg">
+  <link rel="icon" type="image/png" href="icono-192.png">
+  <link rel="apple-touch-icon" href="icono-192.png">
+  <link rel="stylesheet" href="css/estilo.css">
+  <script src="js/tema.js"></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="barra">
+    <div class="barra-interior">
+      <img class="marca" src="logo-marca.svg" alt="" width="44" height="44">
+      <div class="titulos">
+        <strong>Observatorio urbano</strong>
+        <span>Loja · Reportes ciudadanos</span>
+      </div>
+      <button type="button" id="estado-red" class="estado-red" aria-live="polite">
+        <span class="punto"></span><span id="estado-red-texto">En línea</span>
+      </button>
+      <span id="boton-tema"></span>
+    </div>
+  </header>
+
+  <main id="contenido">
+    <noscript><div class="tarjeta">Esta página necesita JavaScript para funcionar.</div></noscript>
+
+    <div class="vista" id="vista-reportar">
+    <div id="zona-formulario">
+      <ol class="progreso" id="progreso" aria-label="Progreso">
+        <li class="actual"><span class="barrita"></span>1. Qué ves</li>
+        <li><span class="barrita"></span>2. Dónde</li>
+        <li><span class="barrita"></span>3. Enviar</li>
+      </ol>
+
+      <!-- PASO 1 -->
+      <section class="tarjeta" id="paso-1" aria-labelledby="titulo-1">
+        <h1 class="paso-titulo" id="titulo-1" tabindex="-1">¿Qué problema ves?</h1>
+        <p class="paso-ayuda">Elige uno y listo. Te toma menos de un minuto.</p>
+
+        <fieldset>
+          <legend class="solo-lector">Categoría</legend>
+          <div class="categorias" id="categorias"></div>
+        </fieldset>
+
+        <label class="etiqueta" for="descripcion">Cuéntanos más <small id="descripcion-nota">(opcional)</small></label>
+        <textarea id="descripcion" rows="3" maxlength="280" placeholder="Ej.: bache profundo frente a la entrada"></textarea>
+        <div class="contador"><span id="contador">0</span>/<span id="contador-max">280</span></div>
+
+        <span class="etiqueta">Foto <small id="foto-nota">(opcional)</small></span>
+        <button type="button" class="boton boton-secundario boton-ancho" id="boton-foto">
+          <svg class="icono"><use href="/iconos.svg#i-camara"/></svg> Añadir foto
+        </button>
+        <input type="file" id="archivo-foto" accept="image/*" hidden>
+        <div class="foto-vista" id="foto-vista" hidden>
+          <img id="foto-imagen" alt="Vista previa de la foto">
+          <span class="peso" id="foto-peso"></span>
+          <button type="button" class="quitar" id="quitar-foto" aria-label="Quitar foto"><svg class="icono"><use href="/iconos.svg#i-cerrar"/></svg></button>
+        </div>
+        <p class="paso-ayuda nota">Cuida la privacidad: sin caras ni placas de carros en la foto.</p>
+
+        <div class="alerta error" id="error-paso-1" role="alert" hidden><svg class="icono"><use href="/iconos.svg#i-alerta"/></svg><p></p></div>
+        <div class="acciones"><button type="button" class="boton boton-primario" id="siguiente-1">Continuar <svg class="icono"><use href="/iconos.svg#i-siguiente"/></svg></button></div>
+      </section>
+
+      <!-- PASO 2 -->
+      <section class="tarjeta" id="paso-2" aria-labelledby="titulo-2" hidden>
+        <h1 class="paso-titulo" id="titulo-2" tabindex="-1">¿Dónde está?</h1>
+        <p class="paso-ayuda">Usamos el GPS de tu celular. Mejor si estás afuera; tarda unos segundos.</p>
+
+        <div class="ubicacion">
+          <div class="medidor" id="medidor" role="img" aria-label="Precisión de la ubicación">
+            <svg viewBox="0 0 160 160" aria-hidden="true"><circle class="fondo" cx="80" cy="80" r="70"/><circle class="valor" id="medidor-valor" cx="80" cy="80" r="70"/></svg>
+            <div class="centro"><strong id="medidor-numero">—</strong><span id="medidor-texto">sin ubicación</span></div>
+          </div>
+          <div class="etiquetas" id="etiquetas-ubicacion"></div>
+          <div class="coordenadas" id="coordenadas"></div>
+        </div>
+
+        <div class="minimapa" id="minimapa" hidden></div>
+        <div class="alerta" id="mensaje-ubicacion" role="status" hidden><svg class="icono"><use href="/iconos.svg#i-info"/></svg><p></p></div>
+        <button type="button" class="boton boton-secundario boton-ancho" id="boton-ubicacion"><svg class="icono"><use href="/iconos.svg#i-pin"/></svg> Ver dónde estoy</button>
+
+        <div class="acciones">
+          <button type="button" class="boton boton-secundario" id="atras-2"><svg class="icono"><use href="/iconos.svg#i-atras"/></svg> Atrás</button>
+          <button type="button" class="boton boton-primario" id="siguiente-2" disabled>Continuar <svg class="icono"><use href="/iconos.svg#i-siguiente"/></svg></button>
+        </div>
+      </section>
+
+      <!-- PASO 3 -->
+      <section class="tarjeta" id="paso-3" aria-labelledby="titulo-3" hidden>
+        <h1 class="paso-titulo" id="titulo-3" tabindex="-1">Revisa y envía</h1>
+        <p class="paso-ayuda">Mira que todo esté bien y envía.</p>
+
+        <dl class="resumen" id="resumen"></dl>
+        <div class="alerta aviso" id="aviso-similar" hidden><svg class="icono"><use href="/iconos.svg#i-alerta"/></svg><p></p></div>
+
+        <div class="consentimiento">
+          <input type="checkbox" id="consentimiento">
+          <label for="consentimiento">Acepto que mi ubicación y este reporte se guarden sin mi nombre, solo para este estudio de la UTPL. Puedo retirarme cuando quiera y se borra todo lo mío.</label>
+        </div>
+        <details>
+          <summary>Ver aviso de privacidad</summary>
+          <ul>
+            <li>Se guarda: categoría, descripción, ubicación y su precisión, fecha y hora, tipo de celular (iOS o Android), velocidad, si moviste el pin, foto si la agregas y un código aleatorio.</li>
+            <li>No se guarda tu nombre, correo, teléfono ni cédula. La ubicación se toma solo al enviar un reporte, nunca en segundo plano.</li>
+            <li>Pueden participar personas de 18 años o más.</li>
+            <li>Los datos se usan únicamente con fines académicos y de investigación, y los ve solo el equipo del proyecto y sus tutoras.</li>
+            <li>Evita fotografiar rostros y placas de vehículos: esas fotos se descartan.</li>
+            <li>Puedes retirarte cuando quieras desde la pestaña Ayuda y se borra todo lo tuyo.</li>
+          </ul>
+        </details>
+
+        <div class="alerta error" id="error-paso-3" role="alert" hidden><svg class="icono"><use href="/iconos.svg#i-alerta"/></svg><p></p></div>
+        <div class="acciones">
+          <button type="button" class="boton boton-secundario" id="atras-3"><svg class="icono"><use href="/iconos.svg#i-atras"/></svg> Atrás</button>
+          <button type="button" class="boton boton-primario" id="boton-enviar">Enviar reporte</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- EXITO -->
+    <section class="tarjeta exito" id="pantalla-exito" aria-labelledby="titulo-exito" hidden>
+      <div class="sello"><svg class="icono" id="exito-icono"><use href="/iconos.svg#i-check"/></svg></div>
+      <h1 class="paso-titulo" id="titulo-exito" tabindex="-1">¡Listo, enviado!</h1>
+      <p id="exito-texto">Gracias por participar.</p>
+      <p class="paso-ayuda">Tu código de participante: <span class="codigo" id="exito-codigo"></span></p>
+      <button type="button" class="boton boton-primario boton-ancho" id="otro-reporte">Hacer otro reporte</button>
+      <button type="button" class="boton boton-texto" id="ver-mis">Ver mis reportes</button>
+      <button type="button" class="boton boton-texto" id="ir-encuesta">Contarnos cómo te fue (30 segundos)</button>
+    </section>
+    </div>
+    <div class="vista" id="vista-mis" hidden></div>
+    <div class="vista" id="vista-ayuda" hidden></div>
+  </main>
+
+  <nav class="pestanas" aria-label="Secciones"><div>
+    <button type="button" data-vista="reportar" aria-current="page"><svg class="icono"><use href="/iconos.svg#i-reportar"/></svg>Reportar</button>
+    <button type="button" data-vista="mis"><svg class="icono"><use href="/iconos.svg#i-lista"/></svg>Mis reportes<span class="insignia" id="insignia-mis" hidden></span></button>
+    <button type="button" data-vista="ayuda"><svg class="icono"><use href="/iconos.svg#i-ayuda"/></svg>Ayuda</button>
+  </div></nav>
+</body>
+</html>

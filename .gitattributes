@@ -1,0 +1,7 @@
+# Fin de linea igual en Windows, Mac y Linux (evita diferencias falsas en Git)
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.docx binary
+*.pdf binary
+*.zip binary

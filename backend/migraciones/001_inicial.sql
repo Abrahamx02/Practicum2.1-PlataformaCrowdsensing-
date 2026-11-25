@@ -1,5 +1,4 @@
--- Ejecutar completo en el editor SQL de Neon (una sola vez por base de datos)
-
+-- Tablas base. Se puede ejecutar sobre una base que ya tenia el esquema de la version 2.
 CREATE EXTENSION IF NOT EXISTS postgis;
 
 CREATE TABLE IF NOT EXISTS fotos (
@@ -22,7 +21,15 @@ CREATE TABLE IF NOT EXISTS reportes (
     plataforma TEXT NOT NULL DEFAULT 'otro',
     navegador TEXT NOT NULL DEFAULT '',
     consentimiento BOOLEAN NOT NULL,
-    foto_id INTEGER REFERENCES fotos(id)
+    consentimiento_version TEXT NOT NULL DEFAULT 'v1',
+    foto_id INTEGER REFERENCES fotos(id),
+    puntaje_calidad REAL,
+    estado_calidad TEXT
 );
+
+-- por si la base viene de la version 2 sin estas columnas
+ALTER TABLE reportes ADD COLUMN IF NOT EXISTS consentimiento_version TEXT NOT NULL DEFAULT 'v1';
+ALTER TABLE reportes ADD COLUMN IF NOT EXISTS puntaje_calidad REAL;
+ALTER TABLE reportes ADD COLUMN IF NOT EXISTS estado_calidad TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_reportes_ubicacion ON reportes USING GIST (ubicacion);

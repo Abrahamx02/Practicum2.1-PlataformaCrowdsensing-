@@ -1,0 +1,10 @@
+{
+  "name": "mcs-loja",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Prototipo Mobile Crowdsensing - pruebas del formulario (JavaScript)",
+  "type": "module",
+  "scripts": {
+    "test": "node --test \"pruebas_frontend/*.test.js\""
+  }
+}

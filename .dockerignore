@@ -1,0 +1,11 @@
+venv/
+.venv/
+.env
+.git/
+.github/
+analisis/
+docs/
+pruebas_frontend/
+node_modules/
+__pycache__/
+*.pyc
