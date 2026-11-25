@@ -1,0 +1,89 @@
+{
+  "version_api": "4.0.0",
+  "categorias": [
+    {
+      "id": "bache",
+      "nombre": "Bache",
+      "ayuda": "Hueco o daño en la calzada"
+    },
+    {
+      "id": "luminaria_danada",
+      "nombre": "Luminaria dañada",
+      "ayuda": "Poste o foco que no funciona"
+    },
+    {
+      "id": "basura",
+      "nombre": "Basura acumulada",
+      "ayuda": "Residuos en la vía pública"
+    },
+    {
+      "id": "otro",
+      "nombre": "Otro",
+      "ayuda": "Cualquier otro problema urbano"
+    }
+  ],
+  "zona": {
+    "nombre": "Campus UTPL y alrededores (zona aproximada, ajustar en Google Maps)",
+    "lat_min": -4.01,
+    "lat_max": -3.975,
+    "lon_min": -79.22,
+    "lon_max": -79.185
+  },
+  "captura": {
+    "max_descripcion": 280,
+    "min_descripcion_otro": 8,
+    "precision_objetivo_m": 20,
+    "precision_aceptable_m": 50,
+    "espera_gps_s": 15,
+    "foto_max_lado_px": 800,
+    "foto_calidad": 0.7
+  },
+  "calidad": {
+    "pesos": {
+      "completitud": 0.2,
+      "validez": 0.15,
+      "exactitud": 0.25,
+      "consistencia": 0.15,
+      "unicidad": 0.15,
+      "oportunidad": 0.1
+    },
+    "minimo_aceptar": 80,
+    "minimo_revisar": 50,
+    "precision_maxima_m": 50,
+    "precision_media_m": 100,
+    "minutos_futuro_tolerado": 5,
+    "dias_demora_maxima": 2,
+    "oportunidad_buena_min": 5,
+    "oportunidad_aceptable_min": 1440,
+    "velocidad_maxima_ms": 28,
+    "salto_minimo_m": 200,
+    "rafaga_max": 5,
+    "rafaga_minutos": 2,
+    "velocidad_reporte_ms": 8,
+    "distancia_duplicado_m": 20,
+    "minutos_duplicado": 10
+  },
+  "consentimiento": {
+    "version": "v2"
+  },
+  "limites": {
+    "reportes_por_minuto_por_ip": 30,
+    "fallos_de_clave_por_minuto": 10,
+    "fecha_minima": "2020-01-01",
+    "dias_maximos_futuro": 365,
+    "tamano_maximo_foto_bytes": 500000
+  },
+  "piloto": {
+    "meta_observaciones": 300,
+    "participantes_min": 15,
+    "participantes_max": 25,
+    "dias": 14,
+    "prueba_de_humo": 50
+  },
+  "capacidad": {
+    "limite_bytes": 1000000000,
+    "aviso_porcentaje": 70,
+    "alerta_porcentaje": 90,
+    "nota": "Plan gratuito de Neon (1 GB por proyecto). Ajustar si cambia el plan."
+  }
+}
