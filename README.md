@@ -1,5 +1,7 @@
 # Observatorio urbano · Loja (MCS Loja)
 
+![Pruebas](https://github.com/Abrahamx02/Practicum2.1-PlataformaCrowdsensing-/actions/workflows/ci.yml/badge.svg) ![Versión](https://img.shields.io/badge/versi%C3%B3n-4.0.0-blue) ![Python](https://img.shields.io/badge/python-3.12-blue)
+
 Prototipo de plataforma de **Mobile Crowdsensing** para analítica urbana (Prácticum 2.1, UTPL).
 Las personas reportan problemas de la ciudad desde el celular (con ubicación y foto opcional); el sistema guarda los reportes,
 **evalúa su calidad con un puntaje de 0 a 100** y todo se ve y se administra desde **un solo panel web**.
